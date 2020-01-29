@@ -10,6 +10,11 @@ def f(x):
     pass
 
 
+"""
+El archivo gd_alt.py es el que funciona, este fue un intento que estaba 
+haciendo, pero ya no me dio tiempo de hacerlo.
+
+
 def grad(alpha, theta, max_it, tol):
 
     while tol < max_it:
@@ -22,8 +27,6 @@ def grad(alpha, theta, max_it, tol):
 
     return theta
 
-
-"""
 def gradient(alpha, theta, max):
 
     q_i = q_i - (alpha*(1/m)*sum(q_0 + q_1*x_1**(i)-y**(i))) / \
