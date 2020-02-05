@@ -1,13 +1,6 @@
 import numpy as np
 from numpy.linalg import inv
 
-'''
-T_elements = 11
-x = np.linspace(-10, 10, T_elements)
-
-X = np.vstack((np.ones(T_elements), x))
-'''
-
 """
 Funtions: 
 
@@ -38,17 +31,6 @@ Funtions:
 """
 
 
-# Linear data with random numbers Gaussian noise
-
-bias = 1
-
-X = 2 * np.random.randn(100, bias)
-Y = 4 + 3 * X + np.random.rand(100, 1)
-
-# Analytical way of Linear Regression
-theta_best = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(Y)
-
-
 def cost(x, y, theta):
     '''
     Calculates the cost for given X and Y. 
@@ -67,3 +49,59 @@ def cost(x, y, theta):
     f_cost = (1 / 2 * m) * np.sum(np.square(pred - y))
 
     return f_cost
+
+
+def gradient_descent(x, y, theta, alpha, max_it):
+    '''
+    Returns the final theta vector.
+
+    alpha: 
+        Learning rate
+    X:
+        Matrix of X with added bias.
+    Y: 
+        Vector of Y
+    '''
+
+    m = len(y)
+
+    cost_history = np.zeros(max_it)
+    alm_theta = np.zeros((max_it, 2))
+
+    for i in range(max_it):
+
+        pred = np.dot(x, theta)
+
+        theta = theta - alpha * ((1 / m) * (x.T.dot((pred - y))))
+        alm_theta[i, :] = theta.T
+        cost_history[i] = cost(x, y, theta)
+
+    return theta
+
+# Linear data with random numbers Gaussian noise
+
+
+bias = 1
+
+X = 2 * np.random.randn(100, bias)
+Y = 4 + 3 * X + np.random.rand(100, 1)
+
+# Analytical way of Linear Regression
+#theta_best = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(Y)
+
+alpha = 0.01
+max_it = 1000
+
+theta = np.random.rand(2, 1)
+
+X_b = np.c_[np.ones((len(X), 1)), X]
+
+
+print("Theta: ", gradient_descent(X, y, theta, alpha, max_it))
+
+'''
+T_elements = 11
+x = np.linspace(-10, 10, T_elements)
+
+X = np.vstack((np.ones(T_elements), x))
+'''
