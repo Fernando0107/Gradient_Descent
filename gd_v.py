@@ -45,8 +45,7 @@ bias = 1
 X = 2 * np.random.randn(100, bias)
 Y = 4 + 3 * X + np.random.rand(100, 1)
 
-m = len(X)
-
+# Analytical way of Linear Regression
 theta_best = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(Y)
 
 
