@@ -41,11 +41,14 @@ def cost(x, y, theta):
         Row vector 
     y: 
         Vector
+
+    pred: 
+        # h(theta), Nos da todas las hipotesis
     '''
 
     m = len(y)
 
-    pred = x.dot(theta)                                 # h(theta)
+    pred = x.dot(theta)
     f_cost = (1 / 2 * m) * np.sum(np.square(pred - y))
 
     return f_cost
@@ -59,21 +62,27 @@ def gradient_descent(x, y, theta, alpha, max_it):
         Learning rate
     X:
         Matrix of X with added bias.
+        dim :
+            m,2
     Y: 
         Vector of Y
+
+    theta:
+        dim: 
+            m,1 
     '''
 
     m = len(y)
 
     cost_history = np.zeros(max_it)
-    alm_theta = np.zeros((max_it, 2))
+    #alm_theta = np.zeros((max_it, 2))
 
     for i in range(max_it):
 
         pred = np.dot(x, theta)
 
         theta = theta - alpha * ((1 / m) * (x.T.dot((pred - y))))
-        alm_theta[i, :] = theta.T
+        #alm_theta[i, :] = theta.T
         cost_history[i] = cost(x, y, theta)
 
     return theta
@@ -94,10 +103,10 @@ max_it = 1000
 
 theta = np.random.rand(2, 1)
 
-X_b = np.c_[np.ones((len(X), 1)), X]
+X_vStack = np.c_[np.ones((len(X), 1)), X]
 
 
-print("Theta: ", gradient_descent(X, y, theta, alpha, max_it))
+print("Theta: ", gradient_descent(X_vStack, Y, theta, alpha, max_it))
 
 '''
 T_elements = 11
