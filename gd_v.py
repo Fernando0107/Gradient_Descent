@@ -101,10 +101,11 @@ Y = 4 + 3 * X + np.random.rand(100, 1)
 alpha = 0.01
 max_it = 1000
 
-theta = np.random.rand(2, 1)
-
 X_vStack = np.c_[np.ones((len(X), 1)), X]
 
+f, c = X_vStack.shape
+
+theta = np.random.rand(c, 1)
 
 print("Theta: ", gradient_descent(X_vStack, Y, theta, alpha, max_it))
 
