@@ -1,5 +1,7 @@
 import numpy as np
 from numpy.linalg import inv
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
 """
 Funtions: 
@@ -85,7 +87,25 @@ def gradient_descent(x, y, theta, alpha, max_it):
         #alm_theta[i, :] = theta.T
         cost_history[i] = cost(x, y, theta)
 
-    return theta
+    return theta, cost_history
+
+# Cross  validation
+
+
+def cross_validation(x_s, y_s, theta, alpha, max_it):
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        x_s, y_s, test_size=0.20, random_state=10)
+
+    brain = gradient_descent(X_train, y_train, theta, alpha, max_it)
+
+    print("Theta: \n", brain[0])
+    cost_ = cost(X_test, y_test, brain[0])
+    print("\nCost: \n", cost_)
+
+    return brain[0]
+
+# Data
 
 # Linear data with random numbers Gaussian noise
 
@@ -94,9 +114,6 @@ bias = 1
 
 X = 2 * np.random.randn(100, bias)
 Y = 4 + 3 * X + np.random.rand(100, 1)
-
-# Analytical way of Linear Regression
-#theta_best = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(Y)
 
 alpha = 0.01
 max_it = 1000
@@ -107,11 +124,27 @@ f, c = X_vStack.shape
 
 theta = np.random.rand(c, 1)
 
-print("Theta: ", gradient_descent(X_vStack, Y, theta, alpha, max_it))
+
+gd = cross_validation(X_vStack, Y, theta, alpha, max_it)
+
+# Plot
+
+plt.scatter(X, Y)
+y = gd[1] * X + gd[0]
+plt.plot(X, y, '-r')
+plt.xlabel("$X$", fontsize=12)
+plt.ylabel("$Y$", fontsize=12)
+plt.axhline(0, color='black')
+plt.axvline(0, color='black')
+plt.show()
+
 
 '''
 T_elements = 11
 x = np.linspace(-10, 10, T_elements)
 
 X = np.vstack((np.ones(T_elements), x))
+
+# Analytical way of Linear Regression
+#theta_best = np.linalg.inv(X.T.dot(X)).dot(X.T).dot(Y)
 '''
